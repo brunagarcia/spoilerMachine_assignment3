@@ -1,0 +1,29 @@
+{
+  "name": "assignment03",
+  "version": "1.0.0",
+  "description": "spoiler machine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunagarcia/spoilerMachine_assignment3.git"
+  },
+  "keywords": [
+    "spoiler",
+    "machine",
+    "api"
+  ],
+  "author": "bruna garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunagarcia/spoilerMachine_assignment3/issues"
+  },
+  "homepage": "https://github.com/brunagarcia/spoilerMachine_assignment3#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "readline-sync": "^1.4.7",
+    "request": "^2.83.0"
+  }
+}
