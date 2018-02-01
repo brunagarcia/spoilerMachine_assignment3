@@ -10,18 +10,30 @@ const spoilerTimer = Number(readlineSync.question('Enter wait time to your spoil
 //create varible to keep spoiler:
 const spoilerContent = `Darth Vader is Anakin Skywalker, Luke's dad`;
 
+// request(`https://api.themoviedb.org/search/movie?query=${movieInput}`,
+//   function (err, response, data) {
+//     moviesData = JSON.parse(data);
+//     console.log(moviesData.title);
+//     console.log(moviesData.overview);
+
+
+//     //info from json:
+//     //match title with = moviesData.title
+//   });
 
 function spoilerFunc(movieName) {
+
   if (!movieName) {
     console.log(`That movie does not exist! No spoilers!`)
   } else {
+    //spoiler warning
     console.log(`The ${movieName} spoiler is going to appear in ${spoilerTimer} seconds...`)
-    //process through API
 
     //declare url to be displayed
     var url = `https://www.google.ca/search?q=${movieName}`
-
+    //process through API
     request(url, function (error, response, body) {
+
       if (!error) {
         //creating array to keep heading after parse
         var headingsArr = []
@@ -31,6 +43,7 @@ function spoilerFunc(movieName) {
           searchHeadings = $("#ires").children();
         searchHeadings.each(function (index) {
           let filtered = Array($("#ires").children().find(".r").text());
+
           if (filtered !== "") {
             // headingsArr.push(filtered);
 
@@ -42,15 +55,21 @@ function spoilerFunc(movieName) {
           } else {
             console.log(err)
           }
+
           //display spoiler to user
           setTimeout(() => {
             console.log(spoilerContent)
           }, spoilerTimer * 1000);
+
         })
       }
-    })
-  }
-}
+
+    }) //Closing request
+
+  } //closing if/else
+
+} //closing function
+
 //Use movieInput as parameter for function.
 spoilerFunc(movieInput);
 
