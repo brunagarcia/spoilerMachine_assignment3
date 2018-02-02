@@ -1,4 +1,5 @@
 //require packages needed.
+const http = require('https');
 const request = require('request');
 const readlineSync = require('readline-sync');
 const cheerio = require('cheerio');
@@ -7,71 +8,55 @@ const cheerio = require('cheerio');
 const movieInput = readlineSync.question('Enter a movie name? ');
 //Spoiler time wait
 const spoilerTimer = Number(readlineSync.question('Enter wait time to your spoiler? '));
-//create varible to keep spoiler:
-const spoilerContent = `Darth Vader is Anakin Skywalker, Luke's dad`;
 
-// request(`https://api.themoviedb.org/search/movie?query=${movieInput}`,
-//   function (err, response, data) {
-//     moviesData = JSON.parse(data);
-//     console.log(moviesData.title);
-//     console.log(moviesData.overview);
-
-
-//     //info from json:
-//     //match title with = moviesData.title
-//   });
-
-function spoilerFunc(movieName) {
+function spoilerFunc (movieName) {
 
   if (!movieName) {
     console.log(`That movie does not exist! No spoilers!`)
   } else {
     //spoiler warning
-    console.log(`The ${movieName} spoiler is going to appear in ${spoilerTimer} seconds...`)
+    console.log(`***** The ${movieName} spoiler is going to appear in ${spoilerTimer} seconds...*****`)
 
+    //Google scraping \/
     //declare url to be displayed
-    var url = `https://www.google.ca/search?q=${movieName}`
-    //process through API
-    request(url, function (error, response, body) {
+    const url = `https://www.google.ca/search?q=${movieName}`
 
+    request(url, function (error, response, body){
       if (!error) {
         //creating array to keep heading after parse
-        var headingsArr = []
+        const headingsArr = []
         //getting heading with cheerio
-        var $ = cheerio.load(body),
-          //Get heading and passing in a variable --> heading are children of #ires container.
-          searchHeadings = $("#ires").children();
-        searchHeadings.each(function (index) {
-          let filtered = Array($("#ires").children().find(".r").text());
-
-          if (filtered !== "") {
-            // headingsArr.push(filtered);
-
-            console.log(filtered[0]);
-            //forEach loop to print the array to console.
-            // headingsArr.forEach(function (h1) {
-            //   console.log(h1);
-            // })
-          } else {
-            console.log(err)
-          }
-
-          //display spoiler to user
-          setTimeout(() => {
-            console.log(spoilerContent)
-          }, spoilerTimer * 1000);
-
-        })
+        var $ = cheerio.load(body)
+        //Get heading and passing in a variable --> heading are children of #ires container.
+        console.log(`Read some news about ${movieName}:`)
+        $('h3').each(function (i, elem){
+          headingsArr[i] = $(this).text();
+          console.log(headingsArr[i]);
+        });
       }
 
     }) //Closing request
 
-  } //closing if/else
+    //MovieDB API 
+    const urlData = `https://api.themoviedb.org/3/search/movie?api_key=c19a709f11ab1e26daed75327d045fc4&query=${movieName}`;
 
-} //closing function
+    //get the spoiler from movie db
+    request(urlData, ((err, response, data) => {
+        if (!err) {
+          moviesData = JSON.parse(data);
+          spoilerTitle = String(moviesData.results[0].title);
+          spoilerContent = String(moviesData.results[0].overview);
+
+          setTimeout(() => {
+            console.log(`*** The ${spoilerTitle} spoiler is:`);
+            console.log(`${spoilerContent}`);
+          }, spoilerTimer * 1000);
+        }
+      })
+    )//Close MovieDB Request
+
+  }
+}//Closing function
 
 //Use movieInput as parameter for function.
 spoilerFunc(movieInput);
-
-// search line for searching on google https://www.google.ca/search?q=movie
-//.eq(index) line 33
