@@ -1,6 +1,11 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+<<<<<<< HEAD
 //Just changing this for testing pourposes!
+=======
+//Just changing this for test pourposes!
+//Just changing this for test pourposes again!!!!
+>>>>>>> 5b9a79a5c0e4c6512ff31b0889c28e8fc5346cba
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
