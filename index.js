@@ -58,7 +58,6 @@ request(urlData, ((err, response, data) => {
       console.log(`\n you got it nerd!`)
     }, spoilerTimer * 1000);
 
-
   } else {
     console.log(`Movie name not found in our database!!! Try again!`);
     return
